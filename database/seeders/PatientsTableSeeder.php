@@ -12,6 +12,7 @@ class PatientsTableSeeder extends Seeder
     {
         for ($i = 1; $i <= 10; $i++) {
             DB::table('patients')->insert([
+                'user_id' => rand(1, 2),
                 'first_name' => 'Patient' . $i,
                 'last_name' => 'LastName' . $i,
                 'date_of_birth' => '198' . rand(0, 9) . '-0' . rand(1, 9) . '-' . rand(10, 28),

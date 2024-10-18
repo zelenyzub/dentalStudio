@@ -12,6 +12,7 @@ class ExaminationsTableSeeder extends Seeder
         for ($i = 1; $i <= 40; $i++) {
             DB::table('examinations')->insert([
                 'patient_id' => rand(1, 10),
+                'user_id' => rand(1, 2),
                 'oral_hygiene' => ['Good', 'Average', 'Poor'][rand(0, 2)],
                 'gum_condition' => ['Healthy', 'Inflamed', 'Receding'][rand(0, 2)],
                 'other_conditions' => ['None', 'Cavities', 'Plaque buildup'][rand(0, 2)],

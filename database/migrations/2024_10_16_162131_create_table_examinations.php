@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('users')->on('id');
             $table->integer('patient_id');
             $table->foreign('patient_id')->references('patients')->on('id');
             $table->string('oral_hygiene')->nullable();
