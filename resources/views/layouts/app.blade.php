@@ -111,13 +111,34 @@
                                     <!--end::Navbar-->
                                     <!--begin::Toolbar wrapper-->
                                     <div class="topbar d-flex align-items-stretch flex-shrink-0">
+                                        @if (Auth::user() && Auth::user()->role == 0)
                                         <!--begin:ADMIN PANEL-->
-                                            <div class="d-flex align-items-center">
-                                                <a href="#" class="topbar-item px-3 px-lg-4" data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                                    <i class="ki-outline ki-abstract-29 fs-2"></i>
-                                                </a>
+                                        <div class="d-flex align-items-center">
+                                            <!--begin::Menu toggle-->
+                                            <a href="#" class="topbar-item px-3 px-lg-4" data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-outline ki-abstract-29 fs-2"></i>
+                                            </a>
+                                            <!--end::Menu toggle-->
+                                            <!--begin::Menu-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-350px" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3 my-0">
+                                                    <a href="/register" class="menu-link px-3 py-2">
+                                                        <span class="menu-icon">
+                                                            <i class="ki-duotone ki-security-user fs-2x">
+                                                                <span class="path1"></span>
+                                                                <span class="path2"></span>
+                                                            </i>
+                                                        </span>
+                                                        <span class="menu-title">Registruj novog korisnika</span>
+                                                    </a>
+                                                </div>
+                                                <!--end::Menu item-->
                                             </div>
-                                            <!--end:ADMIN PANEL-->
+                                            <!--end::Menu-->
+                                        </div>
+                                        <!--end:ADMIN PANEL-->
+                                        @endif
                                         <!--begin::Theme mode-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Menu toggle-->
@@ -134,7 +155,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-night-day fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">Light</span>
+                                                        <span class="menu-title">Svetlo</span>
                                                     </a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -144,7 +165,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-moon fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">Dark</span>
+                                                        <span class="menu-title">Tamno</span>
                                                     </a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -154,7 +175,7 @@
                                                         <span class="menu-icon" data-kt-element="icon">
                                                             <i class="ki-outline ki-screen fs-2"></i>
                                                         </span>
-                                                        <span class="menu-title">System</span>
+                                                        <span class="menu-title">Sistemsko</span>
                                                     </a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -180,9 +201,13 @@
                                                         <!--end::Avatar-->
                                                         <!--begin::Username-->
                                                         <div class="d-flex flex-column">
-                                                            <div class="fw-bold d-flex align-items-center fs-5">Max Smith 
-                                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                                            <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                            <div class="fw-bold d-flex align-items-center fs-5"> {{ Auth::user()->name }} {{ Auth::user()->lastName }}
+                                                                <span class="badge fw-bold fs-8 px-2 py-1 ms-2
+                                                                    {{ Auth::user()->role == 0 ? 'badge-danger' : 'badge-light-success' }}">
+                                                                    {{ Auth::user()->role == 0 ? 'Admin' : 'Korisnik' }}
+                                                                </span>
+                                                                </div>
+                                                            <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                                         </div>
                                                         <!--end::Username-->
                                                     </div>
@@ -193,12 +218,17 @@
                                                 <!--end::Menu separator-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-5">
-                                                    <a href="account/overview.html" class="menu-link px-5"><i class="ki-outline ki-setting fs-2x"></i>&nbsp;Podešavanja profila</a>
+                                                    <a href="#" class="menu-link px-5"><i class="ki-outline ki-setting fs-2x"></i>&nbsp;Podešavanja profila</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-5">
-                                                    <a href="authentication/layouts/corporate/sign-in.html" class="menu-link px-5"><i class="ki-outline ki-exit-right fs-2x"></i>&nbsp;Odjava</a>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" class="menu-link px-5" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                        <i class="ki-outline ki-exit-right fs-2x"></i>&nbsp;Odjava
+                                                    </a>
                                                 </div>
                                                 <!--end::Menu item-->
                                             </div>

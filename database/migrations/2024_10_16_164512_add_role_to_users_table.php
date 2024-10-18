@@ -15,6 +15,7 @@ class AddRoleToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('role')->default(1)->after('email')->comment(' 0 is admin, 1 is user'); // 0 is admin, 1 is user
+            $table->string('lastName')->after('name');
         });
     }
 
@@ -27,6 +28,7 @@ class AddRoleToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
+            $table->dropColumn('lastName');
         });
     }
 }

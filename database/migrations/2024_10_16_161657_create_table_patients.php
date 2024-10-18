@@ -18,10 +18,11 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('tel');
-            $table->string('email');
-            $table->string('jmbg');
-            $table->string('passportNum');
-            $table->boolean('gender');
+            $table->string('email')->nullable();
+            $table->string('jmbg')->nullable();
+            $table->string('passportNum')->nullable();
+            $table->boolean('gender')->nullable();
+            $table->string('illness_history')->nullable();
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('patient_id');
             $table->foreign('patient_id')->references('patients')->on('id');
-            $table->string('oral_hygiene');
-            $table->string('gum_condition');
-            $table->string('other_conditions');
+            $table->string('oral_hygiene')->nullable();
+            $table->string('gum_condition')->nullable();
+            $table->string('other_conditions')->nullable();
             $table->date('examination_date');
             $table->text('description');
             $table->timestamps();

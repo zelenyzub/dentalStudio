@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,12 +13,25 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+// REDIRECT TO KARTONI ROUTE
+Route::get('/home', function () {
+    return redirect('/kartoni');
 });
-Route::get('/kartoni', [App\Http\Controllers\RecordController::class, 'record'])->name('kartoni');
+Route::get('/', function () {
+    return redirect('/kartoni');
+});
 
-Auth::routes();
+// USER VERIFYCATION
+Auth::routes([
+    'verify' => true
+]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// AUTH MIDDLEWARRE
+Route::middleware('auth')->group(function () {
+    Route::get('/kartoni', [App\Http\Controllers\RecordController::class, 'record'])->middleware(['verified'])->name('kartoni');
+});
+
+// ADMIN MIDDLEWARE
+Route::middleware(['admin'])->group(function () {
+});
+

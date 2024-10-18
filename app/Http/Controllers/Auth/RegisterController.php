@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/kartoni';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware(['auth', 'admin']);
     }
 
     /**
@@ -52,6 +52,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'lastName' => ['required', 'string', 'max:255'], // Add this line
+            'role' => ['required', 'string'], // Add this line
         ]);
     }
 
@@ -67,6 +69,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'lastName' => $data['lastName'], // Include lastName
+            'role' => $data['role'],
         ]);
     }
 }
