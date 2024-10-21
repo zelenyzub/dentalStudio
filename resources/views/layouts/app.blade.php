@@ -12,6 +12,7 @@
 		<meta property="og:title" content="Dental Studio Pržno" />
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Metronic by Keenthemes" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		<link rel="canonical" href="http://index.html" />
 		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 		<!--begin::Fonts(mandatory for all pages)-->
@@ -24,6 +25,7 @@
 		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 		<!--end::Global Stylesheets Bundle-->
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 	</head>
@@ -325,6 +327,10 @@
             <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
             <script src="assets/js/custom/utilities/modals/create-app.js"></script>
             <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
             <script src="{{ mix('js/app.js') }}"></script>
             <!--end::Custom Javascript-->
             <!--end::Javascript-->

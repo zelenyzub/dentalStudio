@@ -5,23 +5,25 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
+use Faker\Factory as Faker;
 class PatientsTableSeeder extends Seeder
 {
     public function run()
     {
+        $faker = Faker::create();
+
         for ($i = 1; $i <= 10; $i++) {
             DB::table('patients')->insert([
                 'user_id' => rand(1, 2),
-                'first_name' => 'Patient' . $i,
-                'last_name' => 'LastName' . $i,
-                'date_of_birth' => '198' . rand(0, 9) . '-0' . rand(1, 9) . '-' . rand(10, 28),
-                'address' => rand(100, 999) . ' Street Name',
-                'tel' => '+12345678' . rand(0, 9),
-                'email' => 'patient' . $i . '@example.com',
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'date_of_birth' => $faker->date($format = 'Y-m-d', $max = '2000-01-01'),
+                'address' => $faker->buildingNumber . ' ' . $faker->streetName,
+                'tel' => $faker->phoneNumber,
+                'email' => $faker->unique()->safeEmail,
                 'jmbg' => Str::random(13),
                 'passportNum' => Str::random(9),
-                'gender' => rand(0, 1),
+                'gender' => rand(0, 1), // You can also use $faker->randomElement(['male', 'female'])
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

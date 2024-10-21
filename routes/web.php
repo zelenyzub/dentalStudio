@@ -29,6 +29,9 @@ Auth::routes([
 // AUTH MIDDLEWARRE
 Route::middleware('auth')->group(function () {
     Route::get('/kartoni', [App\Http\Controllers\RecordController::class, 'record'])->middleware(['verified'])->name('kartoni');
+    Route::post('/kartoni/lista-kartona', [App\Http\Controllers\RecordController::class, 'recordTable'])->name('lista-kartona');
+    Route::post('/kartoni/patientData', [App\Http\Controllers\RecordController::class, 'patientData'])->name('patientData');
+    Route::post('/kartoni/deletePatient', [App\Http\Controllers\RecordController::class, 'deletePatient'])->name('deletePatient');
 });
 
 // ADMIN MIDDLEWARE
