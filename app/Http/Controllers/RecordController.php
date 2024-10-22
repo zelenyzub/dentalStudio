@@ -40,8 +40,8 @@ class RecordController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => 'Greška prilikom uzimanja podataka o pacijentu!'], 500);
         }
-
     }
+    
 
     public function deletePatient(Request $request) {
         try {

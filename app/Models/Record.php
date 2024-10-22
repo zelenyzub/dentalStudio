@@ -53,9 +53,15 @@ class Record extends Model
     public function patientData($id) {
         $query = DB::table('patients')
             ->where('id', $id)
-            ->get();
+            ->first(); 
+    
+        if ($query) {
+            $query->illness_history = explode(',', $query->illness_history); 
+        }
+    
         return $query;
     }
+    
 
     public function deleteRecord($id) {
         DB::table('patients')

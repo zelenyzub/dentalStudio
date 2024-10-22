@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        // Add this if not present
+        'illness_history' => [
+            'driver' => 'local',
+            'root' => storage_path('app/illness_history'),
+            'url' => env('APP_URL') . '/illness_history',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

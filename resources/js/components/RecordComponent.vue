@@ -14,9 +14,10 @@
     <div class="card-header">
       <h3 class="card-title">LISTA PACIJENATA</h3>
       <div class="card-toolbar">
-        <button type="button" class="btn btn-sm btn btn-light-success">
+        <button type="button" class="btn btn-sm btn btn-light-success" @click="openAddPatientModal">
           DODAJ PACIJENTA
         </button>
+        <AddPatientComponent ref="addPatientModal" @recordTable="recordTable" />
       </div>
     </div>
     <div class="card-body">
@@ -45,7 +46,7 @@
 
   <!-- INFO MODAL -->
   <div class="modal fade" tabindex="-1" id="infoModal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title">DETALJI PACIJENTA</h3>
@@ -104,10 +105,6 @@
                   </div>
                   <div class="ms-5">{{ this.tel }}</div>
                 </li>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex flex-column">
                 <li class="d-flex flex-column py-2">
                   <div class="d-flex align-items-center">
                     <span class="bullet bullet-vertical bg-success me-5"></span>
@@ -115,6 +112,10 @@
                   </div>
                   <div class="ms-5">{{ this.email ? this.email : "/" }}</div>
                 </li>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-flex flex-column">
                 <li class="d-flex flex-column py-2">
                   <div class="d-flex align-items-center">
                     <span class="bullet bullet-vertical bg-success me-5"></span>
@@ -145,7 +146,17 @@
                     <span class="bullet bullet-vertical bg-success me-5"></span>
                     <span style="font-weight: bold">DOKUMENTA:</span>
                   </div>
-                  <div class="ms-5">{{ this.patientID }}</div>
+                  <div class="ms-5">
+                    <ul v-if="this.illness_history[0] != '' && this.illness_history.length">
+                      <li v-for="(file, index) in this.illness_history" :key="index" class="d-flex align-items-center py-1">
+                        <i class="ki-outline ki-folder-down me-2"></i> <!-- Icon added here -->
+                        <a :href="`/download/${file.split('/').pop()}`" download>
+                          {{ `Dokument ${index + 1}` }}
+                        </a>
+                      </li>
+                    </ul>
+                    <p v-else>/</p>
+                  </div>
                 </li>
               </div>
             </div>
@@ -238,7 +249,11 @@
 </template>
 
 <script>
+import AddPatientComponent from './AddPatientComponent.vue';
 export default {
+  components: {
+    AddPatientComponent,
+  },
   data() {
     return {
       patientID: null,
@@ -251,6 +266,7 @@ export default {
       jmbg: "",
       passportNum: "",
       gender: "",
+      illness_history: [],
     };
   },
   mounted() {
@@ -271,6 +287,9 @@ export default {
     });
   },
   methods: {
+    openAddPatientModal() {
+      this.$refs.addPatientModal.open();
+    },
     deletePatient() {
       let th = this;
       Swal.fire({
@@ -315,7 +334,8 @@ export default {
       await axios
         .post("/kartoni/patientData", { patientID: th.patientID })
         .then((response) => {
-          const patient = response.data.data[0];
+          const patient = response.data.data;
+console.log(patient.illness_history)
           const dob = new Date(patient.date_of_birth);
           const day = String(dob.getDate()).padStart(2, "0");
           const month = String(dob.getMonth() + 1).padStart(2, "0");
@@ -331,6 +351,7 @@ export default {
           th.jmbg = patient.jmbg;
           th.passportNum = patient.passportNum;
           th.gender = patient.gender;
+          th.illness_history = patient.illness_history
         })
         .catch((error) => {
           console.error(
@@ -420,7 +441,6 @@ export default {
           {
             data: "akcije",
             render: function (data, type, row) {
-              console.log(row)
               return `
             <div class="d-flex justify-content-center">
                 <div class="dropdown">

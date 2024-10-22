@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('jmbg')->nullable();
             $table->string('passportNum')->nullable();
             $table->boolean('gender')->nullable();
-            $table->string('illness_history')->nullable();
+            $table->text('illness_history')->nullable();
             $table->timestamps();
         });
     }
