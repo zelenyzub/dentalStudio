@@ -28,14 +28,12 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
         <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
 		<!--end::Global Stylesheets Bundle-->
-		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
     <div id="app">
         <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
             <!--begin::Theme mode setup on page load-->
-            <script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
             <!--end::Theme mode setup on page load-->
             <!--begin::Main-->
             <!--begin::Root-->
@@ -221,7 +219,7 @@
                                                 <!--end::Menu separator-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-5">
-                                                    <a href="#" class="menu-link px-5"><i class="ki-outline ki-setting fs-2x"></i>&nbsp;Podešavanja profila</a>
+                                                    <a href="/errorPage" class="menu-link px-5"><i class="ki-outline ki-setting fs-2x"></i>&nbsp;Podešavanja profila</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
@@ -342,14 +340,6 @@
                     margin-top: 60px;
                     margin-left: -20px;
                 }
-                thead {
-                    background-color: #d9f1ff; /* Light blue color for table head */
-                }
-
-                tfoot {
-                    background-color: #d9f1ff; /* Light blue color for table footer */
-                }
-
             </style>
         </body>
     </div>

@@ -19,7 +19,7 @@
                     <div class="col-6">
                         <div class="mb-10">
                             <label for="datepicker" class="required form-label">Datum rođenja</label>
-                            <datepicker inputFormat="dd.MM.yyyy." v-model="dateOfBirth" class="form-control form-control" @update:modelValue="moveToNextInput"></datepicker>
+                            <datepicker inputFormat="dd.MM.yyyy." v-model="dateOfBirth" class="form-control form-control" startingView="year" @update:modelValue="moveToNextInput"></datepicker>
                         </div>
                         <div class="mb-10">
                             <label for="exampleFormControlInput1" class="required form-label">Ime</label>
@@ -140,7 +140,6 @@ export default {
         }
     },
   mounted() {
-    console.log("Component mounted.");
   },
   methods: {
     open() {

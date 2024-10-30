@@ -18,25 +18,36 @@
           DODAJ PACIJENTA
         </button>
         <AddPatientComponent ref="addPatientModal" @recordTable="recordTable" />
+        <EditPatientComponent 
+          ref="editPatientModal"
+          :patientID="this.patientID"
+          :firstName="this.first_name"
+          :lastName="this.last_name"
+          :dateOfBirth="this.date_of_birth"
+          :address="this.address"
+          :tel="this.tel"
+          :email="this.email"
+          :jmbg="this.jmbg"
+          :passportNum="this.passportNum"
+          :gender="this.gender"
+          :illnessHistory="this.illness_history"
+        />
       </div>
     </div>
     <div class="card-body">
       <!-- begin:recordTable -->
       <div class="table-responsive">
-        <table
-          class="table table-row-bordered gy-5 table-bordered"
-          id="recordTable"
-        >
-          <thead>
-            <tr class="fw-bold fs-6 text-gray-800">
-              <th>Ime i prezime</th>
-              <th>Datum rođenja</th>
-              <th>JMBG</th>
-              <th>Broj pasoša</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
+        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="recordTable">
+            <thead>
+                <tr class="fw-bold">
+                    <th>Ime i prezime</th>
+                    <th>Datum rođenja</th>
+                    <th>JMBG</th>
+                    <th>Broj pasoša</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
         </table>
       </div>
       <!-- end:recordTable -->
@@ -177,41 +188,6 @@
   </div>
   <!-- INFO MODAL -->
 
-  <!-- EDIT MODAL -->
-  <div class="modal fade" tabindex="-1" id="editModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Modal title</h3>
-
-          <!--begin::Close-->
-          <div
-            class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <i class="ki-duotone ki-cross fs-1"
-              ><span class="path1"></span><span class="path2"></span
-            ></i>
-          </div>
-          <!--end::Close-->
-        </div>
-
-        <div class="modal-body">
-          <p>{{ this.patientID }}</p>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- EDIT MODAL -->
-
   <!-- DELETE MODAL -->
   <div class="modal fade" tabindex="-1" id="deleteModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -250,9 +226,11 @@
 
 <script>
 import AddPatientComponent from './AddPatientComponent.vue';
+import EditPatientComponent from './EditPatientComponent.vue';
 export default {
   components: {
     AddPatientComponent,
+    EditPatientComponent
   },
   data() {
     return {
@@ -278,6 +256,9 @@ export default {
     });
     $(document).on("click", "#patientEdit", function (e) {
       th.patientID = $(this).data("entry-id");
+      th.getPatientInfo().then(() => {
+        th.$refs.editPatientModal.open(); // Open the modal in child component after getting the patient data
+      });
     });
     $(document).on("click", "#patientDelete", function (e) {
       th.patientID = $(this).data("entry-id");
@@ -335,7 +316,7 @@ export default {
         .post("/kartoni/patientData", { patientID: th.patientID })
         .then((response) => {
           const patient = response.data.data;
-console.log(patient.illness_history)
+
           const dob = new Date(patient.date_of_birth);
           const day = String(dob.getDate()).padStart(2, "0");
           const month = String(dob.getMonth() + 1).padStart(2, "0");
@@ -362,6 +343,7 @@ console.log(patient.illness_history)
     },
     recordTable() {
       var th = this;
+      
       $("#recordTable").DataTable().clear().draw();
       $("#recordTable").DataTable().clear().destroy();
       var recordTable = $("#recordTable").DataTable({
@@ -406,14 +388,13 @@ console.log(patient.illness_history)
           {
             data: null,
             render: function (data, type, row) {
-              return (
-                row.first_name +
-                " " +
-                row.last_name +
-                '<br><span style="font-size: 0.8em; font-weight: bold;">#' +
-                row.id +
-                "</span>"
-              );
+              return `
+                <a href="#" class="text-gray-900 fw-bold text-hover-primary fs-6" 
+                  data-entry-id="${row.id}">
+                  ${row.first_name} ${row.last_name}
+                </a>
+                <br><span style="font-size: 0.8em; font-weight: bold;">#${row.id}</span>
+              `;
             },
           },
           {
@@ -473,10 +454,7 @@ console.log(patient.illness_history)
 };
 </script>
 <style scoped>
-.table-bordered td {
-  border: 1px solid #dee2e6; /* Change the border color as needed */
-}
 .dropdown-toggle::after {
-  display: none; /* Hides the dropdown arrow */
+  display: none;
 }
 </style>

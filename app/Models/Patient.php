@@ -30,13 +30,18 @@ class Patient extends Model
             'last_name' =>$lastName,
             'address' =>$address,
             'tel' =>$tel,
-            'jmbg' =>$jmbg,
-            'passportNum' =>$passportNum,
             'email' =>$email,
             'gender' =>$gender,
             'user_id' =>$user_id,
             'illness_history' =>$illnessHistory,
         ];
+        if ($jmbg) {
+            $data['jmbg'] = $jmbg;
+            $data['passportNum'] = null; 
+        } elseif ($passportNum) {
+            $data['passportNum'] = $passportNum;
+            $data['jmbg'] = null; 
+        }
 
         $query = DB::table('patients')
             ->insertGetId($data);

@@ -25,6 +25,8 @@ Route::get('/', function () {
 Auth::routes([
     'verify' => true
 ]);
+// ERROR PAGE
+Route::get('/errorPage', [App\Http\Controllers\ErrorPageController::class, 'error'])->name('errorPage');
 
 // AUTH MIDDLEWARRE
 Route::middleware('auth')->group(function () {
@@ -33,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/kartoni/patientData', [App\Http\Controllers\RecordController::class, 'patientData'])->name('patientData');
     Route::post('saveNewPatient', [App\Http\Controllers\AddPatientController::class, 'saveNewPatient'])->name('saveNewPatient');
     Route::post('/kartoni/deletePatient', [App\Http\Controllers\RecordController::class, 'deletePatient'])->name('deletePatient');
+    Route::post('/kartoni/updatePatient', [App\Http\Controllers\EditPatientController::class, 'updatePatient'])->name('updatePatient');
     Route::get('/download/{filename}', function ($filename) {
         $path = storage_path("app/illness_history/{$filename}");
     
