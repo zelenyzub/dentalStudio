@@ -52,7 +52,7 @@
       </div>
       <!-- end:recordTable -->
     </div>
-    <div class="card-footer">Footer</div>
+    <div class="card-footer"></div>
   </div>
 
   <!-- INFO MODAL -->
@@ -389,7 +389,7 @@ export default {
             data: null,
             render: function (data, type, row) {
               return `
-                <a href="#" class="text-gray-900 fw-bold text-hover-primary fs-6" 
+                <a href="/kartoni/pacijent/${row.id}" class="text-gray-900 fw-bold text-hover-primary fs-6" 
                   data-entry-id="${row.id}">
                   ${row.first_name} ${row.last_name}
                 </a>

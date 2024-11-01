@@ -2,33 +2,32 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		<title>Dental Studio Pržno</title>
-		<meta charset="utf-8" />
-		<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-		<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Dental Studio Pržno" />
-		<meta property="og:url" content="https://keenthemes.com/metronic" />
-		<meta property="og:site_name" content="Metronic by Keenthemes" />
+        <title>Dental Studio Pržno</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+        <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dark mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Dental Studio Pržno" />
+        <meta property="og:url" content="https://keenthemes.com/metronic" />
+        <meta property="og:site_name" content="Metronic by Keenthemes" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-		<link rel="canonical" href="http://index.html" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
-		<!--begin::Fonts(mandatory for all pages)-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Vendor Stylesheets(used for this page only)-->
-		<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-		<!--end::Vendor Stylesheets-->
-		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link rel="canonical" href="http://index.html" />
+        <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
+        <!--begin::Fonts(mandatory for all pages)-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+        <!--end::Fonts-->
+        <!--begin::Vendor Stylesheets(used for this page only)-->
+        <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <!--end::Vendor Stylesheets-->
+        <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+        <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-        <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
-		<!--end::Global Stylesheets Bundle-->
-	</head>
+        <!--end::Global Stylesheets Bundle-->
+    </head>
 	<!--end::Head-->
 	<!--begin::Body-->
     <div id="app">
@@ -46,7 +45,7 @@
                         <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                             <!--begin::Logo-->
                             <a href="index.html">
-                                <img alt="Logo" src="assets/media/logos/image8.png" class="logo" />
+                                <img alt="Logo" src="{{ asset('assets/media/logos/image8.png') }}" class="logo" />
                             </a>
                             <!--end::Logo-->
                             <!--begin::Aside toggler-->
@@ -97,7 +96,7 @@
                                 <!--begin::Mobile logo-->
                                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                                     <a href="index.html" class="d-lg-none">
-                                        <img alt="Logo" src="assets/media/logos/demo13-small.svg" class="h-25px" />
+                                        <img alt="Logo" src="{{ asset('assets/media/logos/demo13-small.svg') }}" class="h-25px" />
                                     </a>
                                 </div>
                                 <!--end::Mobile logo-->
@@ -188,7 +187,7 @@
                                         <div class="d-flex align-items-stretch" id="kt_header_user_menu_toggle">
                                             <!--begin::Menu wrapper-->
                                             <div class="topbar-item cursor-pointer symbol px-3 px-lg-5 me-n3 me-lg-n5 symbol-30px symbol-md-35px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
-                                                <img src="assets/media/avatars/blank.png" alt="metronic" />
+                                                <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="metronic" />
                                             </div>
                                             <!--begin::User account menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-350px" data-kt-menu="true">
@@ -197,7 +196,7 @@
                                                     <div class="menu-content d-flex align-items-center px-3">
                                                         <!--begin::Avatar-->
                                                         <div class="symbol symbol-50px me-5">
-                                                            <img alt="Logo" src="assets/media/avatars/blank.png" />
+                                                            <img alt="Logo" src="{{ asset('assets/media/avatars/blank.png') }}" />
                                                         </div>
                                                         <!--end::Avatar-->
                                                         <!--begin::Username-->
@@ -299,13 +298,13 @@
             </div>
             <!--end::Scrolltop-->
             <!--begin::Javascript-->
-            <script>var hostUrl = "assets/";</script>
+            <script>var hostUrl = "{{ asset('assets/') }}";</script>
             <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-            <script src="assets/plugins/global/plugins.bundle.js"></script>
-            <script src="assets/js/scripts.bundle.js"></script>
+            <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+            <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
             <!--end::Global Javascript Bundle-->
             <!--begin::Vendors Javascript(used for this page only)-->
-            <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+            <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
             <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -317,18 +316,20 @@
             <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-            <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+            <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
             <!--end::Vendors Javascript-->
             <!--begin::Custom Javascript(used for this page only)-->
-            <script src="assets/js/widgets.bundle.js"></script>
-            <script src="assets/js/custom/widgets.js"></script>
-            <script src="assets/js/custom/apps/chat/chat.js"></script>
-            <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-            <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-            <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+            <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
+            <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
+            <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
+            <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+            <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
+            <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
             <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
             <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
             <script src="{{ mix('js/app.js') }}"></script>
             <!--end::Custom Javascript-->

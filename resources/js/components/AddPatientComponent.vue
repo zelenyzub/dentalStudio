@@ -166,6 +166,19 @@ export default {
     removeFile(index) {
         this.files.splice(index, 1);
     },
+    resetInputs() {
+        this.dateOfBirth = null;
+        this.selectedType = 'jmbg';
+        this.jmbg = '';
+        this.passportNum = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.address = '';
+        this.tel = '';
+        this.email = '';
+        this.gender = '';
+        this.files = [];
+    },
     saveNewPatient() {
         let formData = new FormData();
 
@@ -203,6 +216,8 @@ export default {
             });
             const modal = bootstrap.Modal.getInstance(document.getElementById("addPatientModal"));
             modal.hide();
+            this.$emit('recordTable');
+            this.resetInputs();
         })
         .catch(error => {
             Swal.fire({

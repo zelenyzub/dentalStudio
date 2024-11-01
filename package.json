@@ -25,6 +25,7 @@
         "bootstrap": "^5.3.3",
         "date-fns": "^4.1.0",
         "jquery": "^3.7.1",
+        "vue-router": "^4.4.5",
         "vue3-datepicker": "^0.4.0"
     }
 }

@@ -36,11 +36,19 @@ Route::middleware('auth')->group(function () {
     Route::post('saveNewPatient', [App\Http\Controllers\AddPatientController::class, 'saveNewPatient'])->name('saveNewPatient');
     Route::post('/kartoni/deletePatient', [App\Http\Controllers\RecordController::class, 'deletePatient'])->name('deletePatient');
     Route::post('/kartoni/updatePatient', [App\Http\Controllers\EditPatientController::class, 'updatePatient'])->name('updatePatient');
+
+    //PATIENT PAGE 
+    Route::get('/kartoni/pacijent/{id}', [App\Http\Controllers\PatientController::class, 'patient'])->name('pacijent');
+    Route::post('/kartoni/pacijent/lista-pregleda', [App\Http\Controllers\PatientController::class, 'patientTable'])->name('lista-pregleda');
+    Route::post('/pregled/delete', [App\Http\Controllers\PatientController::class, 'deleteExamination'])->name('deleteExamination');
+    Route::post('/saveNewExamination', [App\Http\Controllers\PatientController::class, 'saveNewExamination'])->name('saveNewExamination');
+
+
     Route::get('/download/{filename}', function ($filename) {
         $path = storage_path("app/illness_history/{$filename}");
     
         if (!file_exists($path)) {
-            abort(404); // File not found
+            abort(404);
         }
     
         return response()->download($path);

@@ -19,6 +19,8 @@ import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
 import RecordComponent from './components/RecordComponent.vue';
 app.component('record-component', RecordComponent);
+import PatientComponent from './components/PatientComponent.vue';
+app.component('patient-component', PatientComponent);
 
 /**
  * The following block of code may be used to automatically register your
