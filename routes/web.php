@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/kartoni/pacijent/lista-pregleda', [App\Http\Controllers\PatientController::class, 'patientTable'])->name('lista-pregleda');
     Route::post('/pregled/delete', [App\Http\Controllers\PatientController::class, 'deleteExamination'])->name('deleteExamination');
     Route::post('/saveNewExamination', [App\Http\Controllers\PatientController::class, 'saveNewExamination'])->name('saveNewExamination');
+    Route::post('/getExaminationData', [App\Http\Controllers\PatientController::class, 'getExaminationData'])->name('getExaminationData');
+    Route::post('/updateExamination', [App\Http\Controllers\PatientController::class, 'updateExamination'])->name('updateExamination');
 
 
     Route::get('/download/{filename}', function ($filename) {

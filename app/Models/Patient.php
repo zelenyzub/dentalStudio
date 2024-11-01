@@ -106,4 +106,23 @@ class Patient extends Model
             ->insertGetId($data);
         return $query;
     }
+
+    public function getExaminationData($id) {
+        $query = DB::table('examinations')
+                ->select('examinations.examination_date', 'examinations.description')
+                ->where('id', $id)
+                ->first();
+        return $query;
+    }
+
+    public function updateExamination($id, $examinationDate, $examinationDescription) {
+        $updateData = [
+            'examination_date' => $examinationDate ? Carbon::parse($examinationDate)->toDateString() : null,
+            'description' => $examinationDescription,
+        ];
+
+        return DB::table('examinations')
+            ->where('id', $id)
+            ->update($updateData);        
+    }
 }

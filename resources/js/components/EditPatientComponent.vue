@@ -250,6 +250,7 @@ export default {
         });
     },
     async updatePatient() {
+      console.log(this.dateOfBirthInput)
         const updatePatientData = {
           patientID: this.patientID,
           firstName: this.firstNameEdit,

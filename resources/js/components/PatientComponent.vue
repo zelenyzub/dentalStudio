@@ -236,7 +236,11 @@
             <label for="exampleFormControlInput1" class="required form-label"
               >Opsi pregleda</label
             >
-            <textarea class="form-control" v-model="examinationDescription" data-kt-autosize="true"></textarea>
+            <textarea
+              class="form-control"
+              v-model="examinationDescription"
+              data-kt-autosize="true"
+            ></textarea>
           </div>
         </div>
 
@@ -261,10 +265,91 @@
     </div>
   </div>
   <!-- ADD EXAMINATION -->
+
+  <!-- EDIT EXAMINATION -->
+  <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- MODAL LOADER -->
+        <div
+          v-if="loading"
+          class="page-loader flex-column bg-dark bg-opacity-25 position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+          style="z-index: 1"
+        >
+          <span class="spinner-border text-primary" role="status"></span>
+          <span class="text-gray-800 fs-6 fw-semibold mt-5"
+            >Molimo sačekajte...</span
+          >
+        </div>
+        <!-- MODAL LOADER -->
+        <div class="modal-header">
+          <h3>NOVI PREGLED - {{ this.first_name }} {{ this.last_name }}</h3>
+          <!--begin::Close-->
+          <div
+            class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="ki-duotone ki-cross fs-1"
+              ><span class="path1"></span><span class="path2"></span
+            ></i>
+          </div>
+          <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+          <!-- <div v-if="loading" class="text-center mb-3">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div> -->
+          <div class="mb-10">
+            <label for="datepicker" class="required form-label"
+              >Izmeni datum pregleda</label
+            >
+            <datepicker
+              inputFormat="dd.MM.yyyy."
+              v-model="examinationDateEdit"
+              class="form-control form-control"
+            ></datepicker>
+          </div>
+          <div class="mb-10">
+            <label for="exampleFormControlInput1" class="required form-label"
+              >Izmeni opsi pregleda</label
+            >
+            <textarea
+              class="form-control"
+              v-model="examinationDescriptionEdit"
+              data-kt-autosize="true"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-sm btn-light-danger"
+            data-bs-dismiss="modal"
+          >
+            Zatvori
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-light-success"
+            @click="updateExamination"
+            data-bs-dismiss="modal"
+          >
+            Izmeni
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- EDIT EXAMINATION -->
 </template>
   
   <script>
-import axios from 'axios';
+import axios from "axios";
 import Datepicker from "vue3-datepicker";
 
 export default {
@@ -295,56 +380,69 @@ export default {
       examinationID: null,
       examinationDate: null,
       examinationDescription: null,
+
+      examinationDescriptionEdit: null,
+      examinationDateEdit: null,
+      loading: false,
     };
   },
+
+
   mounted() {
     let th = this;
     this.patientTable();
     this.getPatientData();
+
     $(document).on("click", "#examinationDelete", function (e) {
       th.examinationID = $(this).data("entry-id");
       th.deleteExamination();
     });
+    $(document).on("click", "#examinationEdit", function (e) {
+      th.examinationID = $(this).data("entry-id");
+      th.getExaminationData();
+    });
   },
   methods: {
-    resetInputs(){
-        this.examinationDate = null;
-        this.examinationDescription = null;
+    resetInputs() {
+      this.examinationDate = null;
+      this.examinationDescription = null;
     },
     saveNewExamination(event) {
-        event.preventDefault();
-        let formData = new FormData();
+      event.preventDefault();
+      let formData = new FormData();
 
-        const formatedExaminationDate = this.examinationDate ? new Date(this.examinationDate).toISOString().split('T')[0] : null;
+      const formatedExaminationDate = this.examinationDate
+        ? new Date(this.examinationDate).toISOString().split("T")[0]
+        : null;
 
-        formData.append('examinationDate', formatedExaminationDate);
-        formData.append('examinationDescription', this.examinationDescription);
-        formData.append('id', this.id);
+      formData.append("examinationDate", formatedExaminationDate);
+      formData.append("examinationDescription", this.examinationDescription);
+      formData.append("id", this.id);
 
-        axios.post("/saveNewExamination", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
+      axios
+        .post("/saveNewExamination", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
         })
-        .then(response => {
-            this.patientTable();
-            this.resetInputs();
-            Swal.fire({
-                icon: "success",
-                text: "Uspešno sačuvan pregled.",
-                timer: 5000,
-                confirmButtonColor: "#4eb3ac"
-            });
-            
+        .then((response) => {
+          this.patientTable();
+          this.resetInputs();
+          Swal.fire({
+            icon: "success",
+            text: "Uspešno sačuvan pregled.",
+            timer: 5000,
+            confirmButtonColor: "#4eb3ac",
+          });
         })
-        .catch(error => {
-            Swal.fire({
-                icon: "warning",
-                text: "Greška prilikom čuvanja pregleda!",
-                confirmButtonColor: "#4eb3ac"
-            });
-            console.error(error);
+        .catch((error) => {
+          Swal.fire({
+            icon: "warning",
+            text: "Greška prilikom čuvanja pregleda!",
+            confirmButtonColor: "#4eb3ac",
+          });
+          console.error(error);
         });
     },
     setActiveTab(tab) {
@@ -418,7 +516,7 @@ export default {
           },
         },
         columnDefs: [
-          { targets: 0, orderable: true },
+          { targets: 0, orderable: true, width: "10%" },
           { targets: 1, orderable: true },
           { targets: 2, orderable: false },
         ],
@@ -452,10 +550,6 @@ export default {
                             <i class="ki-outline ki-burger-menu-3 text-success fs-1"></i>
                         </button>
                         <div class="dropdown-menu">
-                            <a type="button" data-bs-toggle="modal" data-bs-target="#infoModal" id="examinationInfo" class="dropdown-item d-flex align-items-center" data-entry-id="${row.id}">
-                                <i class="ki-outline ki-information-4 fs-3 me-3"></i>
-                                Detalji pregleda
-                            </a>
                             <a type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="examinationEdit" class="dropdown-item d-flex align-items-center" data-entry-id="${row.id}">
                                 <i class="ki-outline ki-notepad-edit fs-3 me-3"></i>
                                 Izmeni podatke
@@ -503,6 +597,60 @@ export default {
           Swal.fire("Otkazano!", "Brisanje je uspešno otkazano", "info");
         }
       });
+    },
+    async updateExamination() {
+        console.log("TUUUUu",this.examinationDateEdit);
+        let th = this;
+      const updateExaminationData = {
+        id: th.examinationID,
+        examinationDateEdit: new Date(this.examinationDateEdit).toLocaleString(),
+        examinationDescriptionEdit: th.examinationDescriptionEdit,
+      };
+      await axios
+        .post("/updateExamination", updateExaminationData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+          },
+        })
+        .then((response) => {
+          Swal.fire({
+            icon: "success",
+            text: "Uspešno izmenjeni podaci o pregledu.",
+            timer: 5000,
+            confirmButtonColor: "#4eb3ac",
+          });
+          th.patientTable();
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "warning",
+            text: "Greška prilikom izmene podataka o pregledu!",
+            confirmButtonColor: "#4eb3ac",
+          });
+          console.error(error);
+        });
+    },
+    async getExaminationData() {
+      this.loading = true;
+      let th = this;
+      await axios
+        .post("/getExaminationData", { id: th.examinationID })
+        .then((response) => {
+          const examination = response.data.data;
+console.log(examination.examination_date);
+          th.examinationDateEdit = new Date(examination.examination_date);
+          th.examinationDescriptionEdit = examination.description;
+        })
+        .catch((error) => {
+          console.error(
+            "Greška prilikom dohvatanja podataka o pregledu:",
+            error
+          );
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };

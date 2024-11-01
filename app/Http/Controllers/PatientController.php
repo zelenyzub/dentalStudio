@@ -65,4 +65,35 @@ class PatientController extends Controller
             return response() - json_encode(['error' => 'Greska prilikom dodavanja novog pregleda.'], 500);
         }
     }
+
+    public function getExaminationData(Request $request)
+    {
+        try {
+            $id = $request->id;
+
+            $getData = new Patient();
+            $data = $getData->getExaminationData($id);
+
+            return response()->json(['data' => $data], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Greška prilikom uzimanja podataka o pregledu!'], 500);
+        }
+    }
+
+    public function updateExamination(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $examinationDate = $request->examinationDateEdit;
+            $examinationDescription = $request->examinationDescriptionEdit;
+
+            $updateExamination = new Patient();
+            $updateExamination->updateExamination($id, $examinationDate, $examinationDescription);
+
+            return response()->json(['message' => 'Uspesno izmenjeni podaci o pregledu.'], 200);
+
+        } catch (Exception $ex) {
+            return response()->json(['error' => 'Greska prilikom izmene podataka o pregledu.'], 500);
+        }
+    }
 }
