@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('users')->on('id');
-            $table->integer('patient_id');
-            $table->foreign('patient_id')->references('patients')->on('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('patient_id');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->string('oral_hygiene')->nullable();
             $table->string('gum_condition')->nullable();
             $table->string('other_conditions')->nullable();
