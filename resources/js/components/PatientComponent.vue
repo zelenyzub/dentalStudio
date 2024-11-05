@@ -536,10 +536,12 @@ export default {
             },
           },
           {
-            data: "description",
-            render: function (data, type, row) {
-              return `<div class="scrollable-description p-3" style="max-height: 100px; overflow-y: auto;">${data}</div>`;
-            },
+              data: "description",
+              render: function (data, type, row) {
+                  // Convert new lines to <br> tags
+                  const formattedDescription = data ? data.replace(/\n/g, '<br>') : '';
+                  return `<div class="scrollable-description p-3" style="max-height: 100px; overflow-y: auto;">${formattedDescription}</div>`;
+              },
           },
           {
             data: "akcije",
