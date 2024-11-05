@@ -52,17 +52,19 @@ class Patient extends Model
     {
         $start = isset($request['start']) ? $request['start'] : 0;
         $length = isset($request['length']) ? $request['length'] : 0;
-        $sort = 'examinations.id';
-        $sorting = 'asc';
+        $sort = 'examinations.examination_date';
+        $sorting = 'desc';
         $search = isset($request['search']['value']) ? $request['search']['value'] : 0;
 
         if (isset($request['order'][0]['column'])) {
             switch ($request['order'][0]['column']) {
-                case '0':
-                    $sort = 'examinations.id';
-                    break;
-                case '1':
+                case '0': 
                     $sort = 'examinations.examination_date';
+                    if (isset($request['order'][0]['dir']) && $request['order'][0]['dir'] === 'asc') {
+                        $sorting = 'asc';
+                    } else {
+                        $sorting = 'desc';
+                    }
                     break;
             }
         }
@@ -74,7 +76,7 @@ class Patient extends Model
             ->orderBy($sort, $sorting);
 
         if (!empty($search)) {
-            $getRecord = $getRecord->whereRaw("examinations.description LIKE '%{$search}%'");
+            $getRecord->where('examinations.description', 'LIKE', "%{$search}%");
         }
         $recordsFiltered = $getRecord->count();
         $recordsTotal = $getRecord->offset($start)->limit($length)->get();
@@ -107,15 +109,17 @@ class Patient extends Model
         return $query;
     }
 
-    public function getExaminationData($id) {
+    public function getExaminationData($id)
+    {
         $query = DB::table('examinations')
-                ->select('examinations.examination_date', 'examinations.description')
-                ->where('id', $id)
-                ->first();
+            ->select('examinations.examination_date', 'examinations.description')
+            ->where('id', $id)
+            ->first();
         return $query;
     }
 
-    public function updateExamination($id, $examinationDate, $examinationDescription) {
+    public function updateExamination($id, $examinationDate, $examinationDescription)
+    {
         $updateData = [
             'examination_date' => $examinationDate ? Carbon::parse($examinationDate)->toDateString() : null,
             'description' => $examinationDescription,
@@ -123,6 +127,6 @@ class Patient extends Model
 
         return DB::table('examinations')
             ->where('id', $id)
-            ->update($updateData);        
+            ->update($updateData);
     }
 }

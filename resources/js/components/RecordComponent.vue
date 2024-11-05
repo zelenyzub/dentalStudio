@@ -448,6 +448,23 @@ export default {
             },
           },
         ],
+        dom: `
+            <"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>
+            <"row"<"col-sm-12"t>>
+            <"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>
+        `, 
+        lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+        initComplete: function() {
+            $('.dataTables_length select').addClass('form-select form-select-sm').attr('aria-label', 'Select number of records per page');
+            $('.dataTables_filter input').addClass('form-control form-control-sm')
+                .css({
+                    'padding': '0.375rem 0.75rem', 
+                    'margin-left': '10px', 
+                    'width': 'auto' 
+                }).attr('aria-label', 'Search records');
+            $('.dataTables_paginate').addClass('d-flex justify-content-end');
+        }
       });
     },
   },

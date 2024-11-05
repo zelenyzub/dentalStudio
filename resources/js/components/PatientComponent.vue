@@ -70,7 +70,7 @@
   </ul>
 
   <!-- PREGLEDI CARD -->
-  <div class="card shadow-sm mb-5" v-if="activeTab === 'pregledi'">
+  <div class="card shadow-sm mb-5" v-show="activeTab === 'pregledi'">
     <div class="card-body">
       <div class="table-responsive">
         <table
@@ -93,7 +93,7 @@
   <!-- PREGLEDI CARD -->
 
   <!-- PROFIL CARD -->
-  <div class="card shadow-sm mb-5" v-if="activeTab === 'profil'">
+  <div class="card shadow-sm mb-5" v-show="activeTab === 'profil'">
     <div class="card-body">
       <div class="row">
         <div class="col-6">
@@ -387,7 +387,6 @@ export default {
     };
   },
 
-
   mounted() {
     let th = this;
     this.patientTable();
@@ -407,8 +406,7 @@ export default {
       this.examinationDate = null;
       this.examinationDescription = null;
     },
-    saveNewExamination(event) {
-      event.preventDefault();
+    saveNewExamination() {
       let formData = new FormData();
 
       const formatedExaminationDate = this.examinationDate
@@ -427,6 +425,7 @@ export default {
           },
         })
         .then((response) => {
+          this.activeTab = "pregledi";
           this.patientTable();
           this.resetInputs();
           Swal.fire({
@@ -481,7 +480,6 @@ export default {
     },
     patientTable() {
       var th = this;
-
       $("#patientTable").DataTable().clear().draw();
       $("#patientTable").DataTable().clear().destroy();
       var patientTable = $("#patientTable").DataTable({
@@ -539,6 +537,9 @@ export default {
           },
           {
             data: "description",
+            render: function (data, type, row) {
+              return `<div class="scrollable-description p-3" style="max-height: 100px; overflow-y: auto;">${data}</div>`;
+            },
           },
           {
             data: "akcije",
@@ -565,6 +566,23 @@ export default {
             },
           },
         ],
+        dom: `
+            <"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>
+            <"row"<"col-sm-12"t>>
+            <"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>
+        `, 
+        lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+        initComplete: function() {
+            $('.dataTables_length select').addClass('form-select form-select-sm').attr('aria-label', 'Select number of records per page');
+            $('.dataTables_filter input').addClass('form-control form-control-sm')
+                .css({
+                    'padding': '0.375rem 0.75rem', 
+                    'margin-left': '10px', 
+                    'width': 'auto' 
+                }).attr('aria-label', 'Search records');
+            $('.dataTables_paginate').addClass('d-flex justify-content-end');
+        }
       });
     },
     deleteExamination() {
@@ -599,11 +617,12 @@ export default {
       });
     },
     async updateExamination() {
-        console.log("TUUUUu",this.examinationDateEdit);
-        let th = this;
+      let th = this;
       const updateExaminationData = {
         id: th.examinationID,
-        examinationDateEdit: new Date(this.examinationDateEdit).toLocaleString(),
+        examinationDateEdit: new Date(
+          this.examinationDateEdit
+        ).toLocaleString(),
         examinationDescriptionEdit: th.examinationDescriptionEdit,
       };
       await axios
@@ -638,7 +657,6 @@ export default {
         .post("/getExaminationData", { id: th.examinationID })
         .then((response) => {
           const examination = response.data.data;
-console.log(examination.examination_date);
           th.examinationDateEdit = new Date(examination.examination_date);
           th.examinationDescriptionEdit = examination.description;
         })

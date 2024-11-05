@@ -18,18 +18,10 @@ class Record extends Model
         $sorting = 'asc';
         $search = isset($request['search']['value']) ? $request['search']['value'] : 0;
 
-        if (isset($request['order'][0]['column'])) {
-            switch ($request['order'][0]['column']) {
-                case '0':
-                    $sort = 'patients.id';
-                    break;
-                case '1':
-                    $sort = 'patients.first_name';
-                    break;
-                case '2':
-                    $sort = 'patients.last_name';
-                    break;
-            }
+        if (isset($request['order'][0]['dir']) && $request['order'][0]['dir'] === 'asc') {
+            $sorting = 'asc';
+        } else {
+            $sorting = 'desc';
         }
 
         $getRecord = DB::table('patients')
@@ -38,7 +30,10 @@ class Record extends Model
             ->orderBy($sort, $sorting);
 
         if (!empty($search)) {
-            $getRecord = $getRecord->whereRaw("patients.first_name LIKE '%{$search}%' OR patients.last_name LIKE '%{$search}%'");
+            $getRecord->where(function ($query) use ($search) {
+                $query->where('patients.first_name', 'LIKE', "%{$search}%")
+                    ->orWhere('patients.last_name', 'LIKE', "%{$search}%");
+            });
         }
         $recordsFiltered = $getRecord->count();
         $recordsTotal = $getRecord->offset($start)->limit($length)->get();
@@ -50,20 +45,22 @@ class Record extends Model
         ];
     }
 
-    public function patientData($id) {
+    public function patientData($id)
+    {
         $query = DB::table('patients')
             ->where('id', $id)
-            ->first(); 
-    
+            ->first();
+
         if ($query) {
-            $query->illness_history = explode(',', $query->illness_history); 
+            $query->illness_history = explode(',', $query->illness_history);
         }
-    
+
         return $query;
     }
-    
 
-    public function deleteRecord($id) {
+
+    public function deleteRecord($id)
+    {
         DB::table('patients')
             ->where('id', $id)
             ->update(['soft_delete' => 0]);
