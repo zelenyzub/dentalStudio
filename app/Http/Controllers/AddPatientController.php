@@ -23,7 +23,7 @@ class AddPatientController extends Controller
             $user_id = Auth::user()->id;
 
             $request->validate([
-                'files.*' => 'file|max:2048', // Ensure each item is a file with a max size of 2MB
+                'files.*' => 'file|max:102400', // Ensure each item is a file with a max size of 2MB
             ]);
             
             $filePaths = [];

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 // REDIRECT TO KARTONI ROUTE
 Route::get('/home', function () {
     return redirect('/kartoni');
+    // phpinfo();
 });
 Route::get('/', function () {
     return redirect('/kartoni');
